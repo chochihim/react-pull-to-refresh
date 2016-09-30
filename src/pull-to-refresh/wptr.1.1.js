@@ -1,4 +1,5 @@
 import Hammer from 'hammerjs'
+require('transitionEnd');
 export default function WebPullToRefresh() {
 	'use strict';
 
@@ -208,10 +209,9 @@ export default function WebPullToRefresh() {
 
 		var bodyClassRemove = function() {
 			bodyClass.remove( 'ptr-reset' );
-			options.bodyEl.removeEventListener( 'transitionend', bodyClassRemove, false );
-		};
-
-		options.bodyEl.addEventListener( 'transitionend', bodyClassRemove, false );
+			transitionEnd(options.bodyEl).unbind();
+		}
+		transitionEnd(options.bodyEl).bind(bodyClassRemove);
 	};
 
 	return {
